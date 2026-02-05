@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Sushi, my bestie… be my Valentine? 💗</title>
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js" defer></script>
   <style>
     :root {
       --bgA: #fff0f7;
@@ -53,6 +53,19 @@
       padding: 10px 16px; border-radius: 999px; background: rgba(255,255,255,.7);
       border: 1px solid rgba(255,46,122,.2); font-weight: 700; color: var(--text);
     }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.62);
+      border: 1px solid rgba(255,46,122,.12);
+      user-select: none;
+      white-space: nowrap;
+      font-weight: 750;
+      color: rgba(31,26,29,.88);
+    }
     h1 { font-size: clamp(32px, 5vw, 54px); margin: 0; letter-spacing: -0.03em; line-height: 1.1; }
     .subtitle { margin: 12px 0 0; color: var(--muted); font-size: 15px; max-width: 65ch; }
     .grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 20px; padding: 20px 24px 24px; }
@@ -82,19 +95,6 @@
     .shot img { width: 100%; height: auto; object-fit: contain; display: block; }
     .countdown { text-align: center; margin: 16px 0; font-size: 15px; color: var(--muted); }
     .countdown strong { color: var(--pink); }
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.62);
-      border: 1px solid rgba(255,46,122,.12);
-      user-select: none;
-      white-space: nowrap;
-      font-weight: 750;
-      color: rgba(31,26,29,.88);
-    }
   </style>
 </head>
 <body>
@@ -197,8 +197,10 @@
     }
     setInterval(spawnHeart, 400);
 
-    // Confetti
+    // Confetti - safe version
     const confettiCanvas = document.getElementById("confettiCanvas");
+    let confettiLib = null;
+
     function resize(){ 
       const dpr = window.devicePixelRatio || 1;
       confettiCanvas.width = window.innerWidth * dpr;
@@ -206,12 +208,31 @@
       confettiCanvas.style.width = "100vw";
       confettiCanvas.style.height = "100vh";
     }
-    resize(); window.addEventListener("resize", resize);
-    const confetti = confetti.create(confettiCanvas, {resize:false, useWorker:true});
+    resize();
+    window.addEventListener("resize", resize);
 
-    function burst(x,y){ confetti({particleCount:30, spread:70, origin:{x,y}, colors:["#ff2e7a","#ff6fa5","#ffd1e2","#fff"]}); }
-    function bigBurst(){
-      confetti({particleCount:150, spread:120, startVelocity:45, ticks:200, origin:{x:0.5,y:0.6}});
+    function initConfetti() {
+      if (typeof confetti !== 'undefined' && confetti) {
+        confettiLib = confetti.create(confettiCanvas, { resize: false, useWorker: true });
+      }
+    }
+
+    // Try init now and again after load
+    initConfetti();
+    window.addEventListener('load', initConfetti);
+
+    function burst(x, y) {
+      if (confettiLib) {
+        confettiLib({ particleCount: 30, spread: 70, origin: { x, y }, colors: ["#ff2e7a","#ff6fa5","#ffd1e2","#fff"] });
+      }
+    }
+
+    function bigBurst() {
+      if (confettiLib) {
+        confettiLib({ particleCount: 150, spread: 120, startVelocity: 45, ticks: 200, origin: { x: 0.5, y: 0.6 } });
+      } else {
+        console.log("Confetti library not loaded yet - skipping burst");
+      }
     }
 
     // Interaction

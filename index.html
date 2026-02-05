@@ -9,12 +9,12 @@
     :root {
       --bgA: #fff0f7;
       --bgB: #ffc2dc;
-      --card: rgba(255,255,255,.78);
+      --card: rgba(255,255,255,.82);
       --text: #1f1a1d;
       --pink: #ff2e7a;
       --pink2: #ff6fa5;
-      --muted: rgba(31,26,29,.7);
-      --shadow: 0 24px 70px rgba(255,46,122,.12);
+      --muted: rgba(31,26,29,.72);
+      --shadow: 0 20px 60px rgba(255,46,122,.15);
       --radius: 24px;
     }
     * { box-sizing: border-box; }
@@ -28,8 +28,8 @@
                   radial-gradient(ellipse at 50% 100%, var(--bgB), #fff);
       color: var(--text);
       font-family: system-ui, -apple-system, sans-serif;
-      overflow: hidden;
-      padding: 16px;
+      overflow-y: auto; /* allow scrolling if content is long */
+      padding: 20px;
     }
     #confettiCanvas { position: fixed; inset: 0; pointer-events: none; z-index: 9999; }
     .ambient { position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: .7; }
@@ -39,62 +39,75 @@
       text-shadow: 0 20px 40px rgba(0,0,0,.1);
     }
     @keyframes floatUp { to { transform: translateY(-140vh) translateX(var(--drift)) scale(1.3); opacity: 0; } }
-    .wrap { width: min(900px, 95vw); position: relative; z-index: 1; }
+    .wrap { width: min(960px, 96vw); position: relative; z-index: 1; }
     .card {
       border-radius: var(--radius);
       background: var(--card);
-      backdrop-filter: blur(16px);
+      backdrop-filter: blur(18px);
       box-shadow: var(--shadow);
-      border: 1px solid rgba(255,255,255,.6);
+      border: 1px solid rgba(255,255,255,.65);
       overflow: hidden;
     }
-    .top { padding: 24px 24px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,.6); }
+    .top { padding: 24px 28px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,.6); }
     .badge {
-      padding: 10px 16px; border-radius: 999px; background: rgba(255,255,255,.7);
-      border: 1px solid rgba(255,46,122,.2); font-weight: 700; color: var(--text);
+      padding: 10px 16px; border-radius: 999px; background: rgba(255,255,255,.75);
+      border: 1px solid rgba(255,46,122,.25); font-weight: 700; color: var(--text);
     }
     .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.62);
-      border: 1px solid rgba(255,46,122,.12);
-      user-select: none;
-      white-space: nowrap;
-      font-weight: 750;
-      color: rgba(31,26,29,.88);
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 14px; border-radius: 999px;
+      background: rgba(255,255,255,.7); border: 1px solid rgba(255,46,122,.18);
+      font-weight: 750; color: rgba(31,26,29,.9);
     }
-    h1 { font-size: clamp(32px, 5vw, 54px); margin: 0; letter-spacing: -0.03em; line-height: 1.1; }
-    .subtitle { margin: 12px 0 0; color: var(--muted); font-size: 15px; max-width: 65ch; }
-    .grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 20px; padding: 20px 24px 24px; }
-    @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+    h1 { font-size: clamp(36px, 6vw, 58px); margin: 0; letter-spacing: -0.03em; line-height: 1.05; }
+    .subtitle { margin: 14px 0 0; color: var(--muted); font-size: 16px; max-width: 70ch; line-height: 1.5; }
+    .grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 24px; padding: 24px 28px; }
+    @media (max-width: 960px) { .grid { grid-template-columns: 1fr; } }
     .map, .panel {
-      border-radius: 20px; padding: 20px; background: rgba(255,255,255,.6);
-      border: 1px solid rgba(255,46,122,.15); position: relative;
+      border-radius: 22px; padding: 22px; background: rgba(255,255,255,.65);
+      border: 1px solid rgba(255,46,122,.18);
     }
-    svg { width: 100%; height: 240px; }
-    .reveal { display: none; padding: 20px 24px; border-top: 1px solid rgba(255,255,255,.6); animation: fadeIn 1s ease; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+    svg { width: 100%; height: 260px; }
+    .reveal {
+      display: none;
+      padding: 28px 28px 40px;
+      border-top: 1px solid rgba(255,255,255,.65);
+      animation: fadeIn 0.8s ease-out;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: none; } }
     button {
       position: absolute; top: 50%; transform: translate(-50%,-50%) scale(var(--s,1));
-      padding: 16px 28px; border-radius: 999px; font-weight: 900; cursor: pointer;
-      box-shadow: 0 16px 40px rgba(0,0,0,.15); transition: all .2s ease;
+      padding: 16px 32px; border-radius: 999px; font-weight: 900; cursor: pointer;
+      box-shadow: 0 16px 40px rgba(0,0,0,.16); transition: all .2s ease;
     }
     #yes { left: 28%; background: linear-gradient(135deg, var(--pink), var(--pink2)); color: white; }
-    #no { left: 72%; background: rgba(255,255,255,.8); color: var(--text); border: 1px solid rgba(255,46,122,.2); }
+    #no { left: 72%; background: rgba(255,255,255,.82); color: var(--text); border: 1px solid rgba(255,46,122,.22); }
     .strip {
-      display: flex; justify-content: center; gap: 12px; overflow-x: auto;
-      padding: 16px 0; scroll-snap-type: x mandatory;
+      display: flex; justify-content: center; margin-top: 24px;
     }
     .shot {
-      min-width: 240px; max-width: 480px; border-radius: 18px; overflow: hidden;
-      box-shadow: 0 20px 40px rgba(0,0,0,.1); scroll-snap-align: center;
+      width: 100%;
+      max-width: 620px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0,0,0,.14);
+      background: white;
     }
-    .shot img { width: 100%; height: auto; object-fit: contain; display: block; }
-    .countdown { text-align: center; margin: 16px 0; font-size: 15px; color: var(--muted); }
-    .countdown strong { color: var(--pink); }
+    .shot img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .shot-caption {
+      padding: 16px 24px;
+      font-size: 15px;
+      color: var(--muted);
+      text-align: center;
+      background: rgba(255,255,255,0.7);
+      border-top: 1px solid rgba(255,46,122,.1);
+    }
+    .countdown { text-align: center; margin: 20px 0; font-size: 16px; color: var(--muted); }
+    .countdown strong { color: var(--pink); font-weight: 700; }
   </style>
 </head>
 <body>
@@ -106,7 +119,7 @@
         <div class="badge"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:linear-gradient(var(--pink),var(--pink2));margin-right:8px;"></span>Florida 🌴 ⇄ London 🎡</div>
         <div class="badge">My Amazing Sushi 💕</div>
       </div>
-      <div style="padding:24px 24px 12px;">
+      <div style="padding:28px 28px 16px;">
         <h1>Sushi, my bestie… will you be my Valentine?</h1>
         <p class="subtitle">
           You're the most incredible person I know — funny, kind, beautiful inside and out. 
@@ -116,66 +129,66 @@
       </div>
       <div class="grid">
         <div class="map">
-          <div style="display:flex;justify-content:space-between;margin-bottom:16px;">
-            <span class="pill"><span style="font-size:18px;">🌴</span> Florida (me, missing you)</span>
-            <span class="pill"><span style="font-size:18px;">🎡</span> London (you, my home)</span>
+          <div style="display:flex;justify-content:space-between;margin-bottom:20px;">
+            <span class="pill"><span style="font-size:20px;">🌴</span> Florida (me, missing you)</span>
+            <span class="pill"><span style="font-size:20px;">🎡</span> London (you, my home)</span>
           </div>
           <div style="position:relative;">
-            <svg viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg">
+            <svg viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg">
               <defs><linearGradient id="grad"><stop offset="0" stop-color="#ff2e7a"/><stop offset="1" stop-color="#ff6fa5"/></linearGradient></defs>
-              <path d="M180 150c0-35 28-63 63-63s63 28 63 63c0 50-63 110-63 110s-63-60-63-110z" fill="url(#grad)" opacity=".9"/>
-              <circle cx="243" cy="150" r="20" fill="white" opacity=".9"/><circle cx="243" cy="150" r="10" fill="#ff2e7a"/>
-              <path d="M450 110c0-35 28-63 63-63s63 28 63 63c0 50-63 110-63 110s-63-60-63-110z" fill="url(#grad)" opacity=".9"/>
-              <circle cx="513" cy="110" r="20" fill="white" opacity=".9"/><circle cx="513" cy="110" r="10" fill="#ff2e7a"/>
-              <path d="M300 140 C 360 60, 420 60, 480 100" stroke="#ff6fa5" stroke-width="4" fill="none" stroke-dasharray="8 12" stroke-linecap="round">
-                <animate attributeName="stroke-dashoffset" from="0" to="-80" dur="3s" repeatCount="indefinite"/>
+              <path d="M180 160c0-40 30-70 70-70s70 30 70 70c0 55-70 120-70 120s-70-65-70-120z" fill="url(#grad)" opacity=".9"/>
+              <circle cx="250" cy="160" r="22" fill="white" opacity=".9"/><circle cx="250" cy="160" r="11" fill="#ff2e7a"/>
+              <path d="M450 120c0-40 30-70 70-70s70 30 70 70c0 55-70 120-70 120s-70-65-70-120z" fill="url(#grad)" opacity=".9"/>
+              <circle cx="520" cy="120" r="22" fill="white" opacity=".9"/><circle cx="520" cy="120" r="11" fill="#ff2e7a"/>
+              <path d="M300 150 C 370 70, 430 70, 490 110" stroke="#ff6fa5" stroke-width="5" fill="none" stroke-dasharray="9 13" stroke-linecap="round">
+                <animate attributeName="stroke-dashoffset" from="0" to="-90" dur="3.5s" repeatCount="indefinite"/>
               </path>
-              <g transform="translate(390,80)">
-                <path d="M0 0 l25 12 -20 7 4 10 -7 3 -7-9 -12 4 -3-6 12-6 -5-12 7-3 6 11z" fill="#ff2e7a" opacity=".9"/>
-                <circle cx="0" cy="0" r="4" fill="white"/>
+              <g transform="translate(395,85)">
+                <path d="M0 0 l28 14 -22 8 5 11 -8 3 -8-10 -14 5 -3-7 14-7 -6-14 8-3 7 12z" fill="#ff2e7a" opacity=".9"/>
+                <circle cx="0" cy="0" r="5" fill="white"/>
               </g>
             </svg>
           </div>
-          <p style="text-align:center;margin:12px 0 0;font-size:13px;color:var(--muted);">Oceans apart, hearts together. Always.</p>
+          <p style="text-align:center;margin:16px 0 0;font-size:14px;color:var(--muted);">Oceans apart, hearts together. Always.</p>
         </div>
 
         <div class="panel">
           <div>
-            <div style="font-weight:800;font-size:20px;">Hey Sushi… be my Valentine, bestie?</div>
-            <div style="color:var(--muted);font-size:14px;margin-top:8px;">
+            <div style="font-weight:800;font-size:22px;">Hey Sushi… be my Valentine, bestie?</div>
+            <div style="color:var(--muted);font-size:15px;margin-top:10px;">
               No pressure — you're shy and I love that. But you're my favorite timezone, my late-night laugh, my everything.
             </div>
           </div>
-          <div style="position:relative; height:100px;">
-            <div id="zone" style="height:90px;border:1px dashed rgba(255,46,122,.3);border-radius:18px;position:relative;overflow:hidden;">
+          <div style="position:relative; height:110px; margin-top:20px;">
+            <div id="zone" style="height:96px;border:1px dashed rgba(255,46,122,.35);border-radius:20px;position:relative;overflow:hidden;">
               <button id="yes">Yes, obviously 💗</button>
               <button id="no">No way</button>
             </div>
-            <div id="hint" style="text-align:center;margin-top:8px;font-size:13px;color:var(--muted);">The "No" button is terrified of how perfect we are 😏</div>
+            <div id="hint" style="text-align:center;margin-top:12px;font-size:14px;color:var(--muted);">The "No" button is terrified of how perfect we are 😏</div>
           </div>
         </div>
       </div>
 
       <div class="reveal" id="reveal">
-        <h2 style="margin:0;font-size:clamp(28px,4vw,40px);">You just made my whole world 🥹💕</h2>
-        <p style="color:var(--muted);line-height:1.6;margin:16px 0;">
+        <h2 style="margin:0;font-size:clamp(32px,5vw,44px);">You just made my whole world 🥹💕</h2>
+        <p style="color:var(--muted);line-height:1.6;margin:20px 0;font-size:16px;">
           Sushi, you're amazing — my best friend, my biggest smile, my reason to count down the days. 
           We'll start this Valentine's on FaceTime with your favorite snacks and mine, then soon… no more screens, just us. 
           Florida sunrises and London nights? We're closing that gap, I promise.
         </p>
-        <div class="countdown" id="countdown">Counting down to our next "same place" moment… <strong id="days"></strong> days closer already 💗</div>
+        <div class="countdown">Counting down to our next "same place" moment… <strong id="days"></strong> days closer already 💗</div>
         
         <div class="strip">
           <div class="shot">
             <img src="https://files.catbox.moe/1p8z0k.jpg" alt="Our London photo booth moments">
-            <div style="padding:12px 16px; font-size:14px; color:var(--muted); text-align:center; background:rgba(255,255,255,0.6);">
+            <div class="shot-caption">
               Our London CHEEEZ booth — silly faces, kisses, hugs... you're my favorite everything 💗 Can't wait for round 2 in person
             </div>
           </div>
         </div>
       </div>
 
-      <div style="padding:16px 24px;text-align:center;font-size:13px;color:rgba(31,26,29,.6);">
+      <div style="padding:20px 28px;text-align:center;font-size:14px;color:rgba(31,26,29,.65);">
         Made with endless love, late-night texts, and way too much determination to get to London for you 🩷
       </div>
     </div>
@@ -190,18 +203,18 @@
       el.textContent = ["💗","💖","✨","🩷"][Math.floor(Math.random()*4)];
       el.style.left = Math.random()*100 + "vw";
       el.style.fontSize = (16 + Math.random()*24) + "px";
-      el.style.setProperty("--drift", (Math.random()*120 - 60) + "px");
-      el.style.animationDuration = (8 + Math.random()*8) + "s";
+      el.style.setProperty("--drift", (Math.random()*140 - 70) + "px");
+      el.style.animationDuration = (8 + Math.random()*9) + "s";
       ambient.appendChild(el);
-      setTimeout(()=>el.remove(), 20000);
+      setTimeout(()=>el.remove(), 22000);
     }
-    setInterval(spawnHeart, 400);
+    setInterval(spawnHeart, 380);
 
-    // Confetti - safe version
+    // Confetti - no worker, safe init
     const confettiCanvas = document.getElementById("confettiCanvas");
     let confettiLib = null;
 
-    function resize(){ 
+    function resize() {
       const dpr = window.devicePixelRatio || 1;
       confettiCanvas.width = window.innerWidth * dpr;
       confettiCanvas.height = window.innerHeight * dpr;
@@ -213,25 +226,18 @@
 
     function initConfetti() {
       if (typeof confetti !== 'undefined' && confetti) {
-        confettiLib = confetti.create(confettiCanvas, { resize: false, useWorker: true });
+        confettiLib = confetti.create(confettiCanvas, { resize: false, useWorker: false });
       }
     }
-
-    // Try init now and again after load
     initConfetti();
     window.addEventListener('load', initConfetti);
 
     function burst(x, y) {
-      if (confettiLib) {
-        confettiLib({ particleCount: 30, spread: 70, origin: { x, y }, colors: ["#ff2e7a","#ff6fa5","#ffd1e2","#fff"] });
-      }
+      if (confettiLib) confettiLib({ particleCount: 30, spread: 70, origin: { x, y }, colors: ["#ff2e7a","#ff6fa5","#ffd1e2","#fff"] });
     }
-
     function bigBurst() {
       if (confettiLib) {
-        confettiLib({ particleCount: 150, spread: 120, startVelocity: 45, ticks: 200, origin: { x: 0.5, y: 0.6 } });
-      } else {
-        console.log("Confetti library not loaded yet - skipping burst");
+        confettiLib({ particleCount: 160, spread: 130, startVelocity: 48, ticks: 220, origin: { x: 0.5, y: 0.6 } });
       }
     }
 
@@ -245,9 +251,9 @@
     const noPhrases = ["No way", "Sushi… really? 🥺", "You're breaking my heart", "Shy mode activated?", "That button is running away", "Click Yes, bestie 💗", "Pretty please?", "I love you too much for No"];
 
     function growYes(){
-      yesScale = Math.min(2.5, yesScale + 0.15);
+      yesScale = Math.min(2.6, yesScale + 0.16);
       yes.style.setProperty("--s", yesScale);
-      no.style.setProperty("--s", Math.max(0.5, 1 - (yesScale-1)*0.6));
+      no.style.setProperty("--s", Math.max(0.48, 1 - (yesScale-1)*0.65));
     }
 
     function dodge(e){
@@ -256,7 +262,7 @@
       const dx = rect.left + rect.width/2 - e.clientX;
       const dy = rect.top + rect.height/2 - e.clientY;
       const dist = Math.hypot(dx, dy) || 1;
-      const move = 140 + Math.random()*100;
+      const move = 150 + Math.random()*110;
       let newLeft = (rect.left - zoneRect.left) + rect.width/2 + (dx/dist)*move;
       let newTop = (rect.top - zoneRect.top) + rect.height/2 + (dy/dist)*move;
       newLeft = Math.max(rect.width/2, Math.min(zoneRect.width - rect.width/2, newLeft));
@@ -289,13 +295,13 @@
 
     zone.addEventListener("mousemove", (e) => {
       const rect = no.getBoundingClientRect();
-      if (Math.hypot(e.clientX - (rect.left + rect.width/2), e.clientY - (rect.top + rect.height/2)) < 180) {
+      if (Math.hypot(e.clientX - (rect.left + rect.width/2), e.clientY - (rect.top + rect.height/2)) < 190) {
         dodge(e);
       }
     });
 
-    // Fake countdown (edit startDate to when you want to start counting from)
-    const startDate = new Date("2025-01-01"); // ← change this to your meaningful date
+    // Fake countdown
+    const startDate = new Date("2025-01-01");
     function updateCountdown(){
       const now = new Date();
       const diff = Math.ceil((now - startDate) / (1000*60*60*24));
@@ -304,7 +310,7 @@
     updateCountdown();
     setInterval(updateCountdown, 86400000);
 
-    setTimeout(()=>burst(0.5,0.3), 1000);
+    setTimeout(()=>burst(0.5,0.3), 800);
   </script>
 </body>
 </html>

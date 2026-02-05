@@ -87,7 +87,7 @@
     }
     .shot {
       width: 100%;
-      max-width: 720px; /* bigger, natural size */
+      max-width: 720px;
       border-radius: 24px;
       overflow: hidden;
       box-shadow: 0 28px 70px rgba(0,0,0,.16);
@@ -183,7 +183,7 @@
         
         <div class="strip">
           <div class="shot">
-            <img src="https://stock.adobe.com/images/loving-couple-shares-joyful-intimate-moments-in-black-and-white-photo-booth-strip/123456789" 
+            <img src="https://images.pexels.com/photos/1485781/pexels-photo-1485781.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
                  alt="Our London photo booth moments" 
                  loading="lazy" 
                  onerror="this.src='https://images.unsplash.com/photo-1519741497674-281450d6a204?auto=format&fit=crop&w=800&q=80'; this.alt='Romantic couple moment (fallback)';">
@@ -201,7 +201,7 @@
   </div>
 
   <script>
-    // Ambient hearts (unchanged)
+    // Ambient hearts
     const ambient = document.getElementById("ambient");
     function spawnHeart(){
       const el = document.createElement("div");
@@ -216,7 +216,7 @@
     }
     setInterval(spawnHeart, 380);
 
-    // Confetti - safe, no worker
+    // Confetti
     const confettiCanvas = document.getElementById("confettiCanvas");
     let confettiLib = null;
 
@@ -247,7 +247,7 @@
       }
     }
 
-    // Interaction (unchanged)
+    // Interaction
     const yes = document.getElementById("yes");
     const no = document.getElementById("no");
     const hint = document.getElementById("hint");

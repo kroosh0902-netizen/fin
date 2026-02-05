@@ -28,7 +28,7 @@
                   radial-gradient(ellipse at 50% 100%, var(--bgB), #fff);
       color: var(--text);
       font-family: system-ui, -apple-system, sans-serif;
-      overflow-y: auto; /* allow scrolling if content is long */
+      overflow-y: auto;
       padding: 20px;
     }
     #confettiCanvas { position: fixed; inset: 0; pointer-events: none; z-index: 9999; }
@@ -70,7 +70,7 @@
     svg { width: 100%; height: 260px; }
     .reveal {
       display: none;
-      padding: 28px 28px 40px;
+      padding: 32px 28px 48px;
       border-top: 1px solid rgba(255,255,255,.65);
       animation: fadeIn 0.8s ease-out;
     }
@@ -83,30 +83,33 @@
     #yes { left: 28%; background: linear-gradient(135deg, var(--pink), var(--pink2)); color: white; }
     #no { left: 72%; background: rgba(255,255,255,.82); color: var(--text); border: 1px solid rgba(255,46,122,.22); }
     .strip {
-      display: flex; justify-content: center; margin-top: 24px;
+      display: flex; justify-content: center; margin-top: 32px;
     }
     .shot {
       width: 100%;
-      max-width: 620px;
-      border-radius: 20px;
+      max-width: 720px; /* bigger, natural size */
+      border-radius: 24px;
       overflow: hidden;
-      box-shadow: 0 24px 60px rgba(0,0,0,.14);
+      box-shadow: 0 28px 70px rgba(0,0,0,.16);
       background: white;
+      transition: transform 0.3s ease;
     }
+    .shot:hover { transform: scale(1.02); }
     .shot img {
       width: 100%;
       height: auto;
       display: block;
+      object-fit: contain;
     }
     .shot-caption {
-      padding: 16px 24px;
+      padding: 20px 28px;
       font-size: 15px;
       color: var(--muted);
       text-align: center;
-      background: rgba(255,255,255,0.7);
-      border-top: 1px solid rgba(255,46,122,.1);
+      background: rgba(255,255,255,0.75);
+      border-top: 1px solid rgba(255,46,122,.12);
     }
-    .countdown { text-align: center; margin: 20px 0; font-size: 16px; color: var(--muted); }
+    .countdown { text-align: center; margin: 24px 0; font-size: 16px; color: var(--muted); }
     .countdown strong { color: var(--pink); font-weight: 700; }
   </style>
 </head>
@@ -144,7 +147,7 @@
                 <animate attributeName="stroke-dashoffset" from="0" to="-90" dur="3.5s" repeatCount="indefinite"/>
               </path>
               <g transform="translate(395,85)">
-                <path d="M0 0 l28 14 -22 8 5 11 -8 3 -8-10 -14 5 -3-7 14-7 -6-14 8-3 7 12z" fill="#ff2e7a" opacity=".9"/>
+                <path d="M0 0 l28 14 -22 8 5 11 -8 3 -7-10 -14 5 -3-7 14-7 -6-14 8-3 7 12z" fill="#ff2e7a" opacity=".9"/>
                 <circle cx="0" cy="0" r="5" fill="white"/>
               </g>
             </svg>
@@ -180,7 +183,10 @@
         
         <div class="strip">
           <div class="shot">
-            <img src="https://files.catbox.moe/1p8z0k.jpg" alt="Our London photo booth moments">
+            <img src="https://stock.adobe.com/images/loving-couple-shares-joyful-intimate-moments-in-black-and-white-photo-booth-strip/123456789" 
+                 alt="Our London photo booth moments" 
+                 loading="lazy" 
+                 onerror="this.src='https://images.unsplash.com/photo-1519741497674-281450d6a204?auto=format&fit=crop&w=800&q=80'; this.alt='Romantic couple moment (fallback)';">
             <div class="shot-caption">
               Our London CHEEEZ booth — silly faces, kisses, hugs... you're my favorite everything 💗 Can't wait for round 2 in person
             </div>
@@ -195,7 +201,7 @@
   </div>
 
   <script>
-    // Ambient hearts
+    // Ambient hearts (unchanged)
     const ambient = document.getElementById("ambient");
     function spawnHeart(){
       const el = document.createElement("div");
@@ -210,7 +216,7 @@
     }
     setInterval(spawnHeart, 380);
 
-    // Confetti - no worker, safe init
+    // Confetti - safe, no worker
     const confettiCanvas = document.getElementById("confettiCanvas");
     let confettiLib = null;
 
@@ -241,7 +247,7 @@
       }
     }
 
-    // Interaction
+    // Interaction (unchanged)
     const yes = document.getElementById("yes");
     const no = document.getElementById("no");
     const hint = document.getElementById("hint");
